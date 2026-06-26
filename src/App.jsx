@@ -1,4 +1,6 @@
 import React from 'react'
+import BentoGrid from './components/BentoGrid'
+
 
 function App() {
   return (
@@ -47,9 +49,7 @@ function App() {
         {/* Feature Showcase Skeleton */}
         <section id="features" className="container" aria-labelledby="features-title">
           <h2 id="features-title" style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2rem' }}>Engineered For Modern Data Teams</h2>
-          <div style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed var(--border-color)', borderRadius: '16px', color: 'var(--text-secondary)' }}>
-            [Feature Bento Grid Section - Coming in Task 3]
-          </div>
+          <BentoGrid />
         </section>
 
         {/* Pricing Matrix Skeleton */}
