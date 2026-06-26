@@ -4,6 +4,21 @@ import Pricing from './components/Pricing'
 
 
 function App() {
+  const renderBouncyTitle = (text, startIdx) => {
+    return text.split("").map((char, charIdx) => {
+      const idx = startIdx + charIdx;
+      return (
+        <span 
+          key={charIdx} 
+          className="pop-char" 
+          style={{ '--char-idx': idx }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      );
+    });
+  };
+
   useEffect(() => {
     // 1. Entry Loader Coordination
     const loaderTimeout = setTimeout(() => {
@@ -60,16 +75,11 @@ function App() {
 
     window.addEventListener('mousemove', handleMouseMove);
 
-    // 4. Scroll Assembly and Parallax tracking
+    // 4. Scroll Parallax tracking
     const handleScroll = () => {
       const scrollY = window.scrollY;
       
-      // Calculate assembly percentage: 0 at scrollY=0, 1 at scrollY=450 (clamped)
-      const assemblyThreshold = 450;
-      const assemblyPct = Math.min(scrollY / assemblyThreshold, 1);
-      document.documentElement.style.setProperty('--assembly-pct', assemblyPct.toString());
-      
-      // Calculate parallax scroll values
+      // Calculate parallax scroll values for floating chips
       document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
     };
 
@@ -129,7 +139,10 @@ function App() {
       <main id="main-content">
         
         {/* Hero Section */}
-        <section id="hero" aria-labelledby="hero-title" style={{ padding: '6rem 0 4rem 0', position: 'relative', isolation: 'isolate', overflow: 'hidden' }}>
+        <section id="hero" aria-labelledby="hero-title" className="hero-section">
+          {/* Animated radial gradient mesh */}
+          <div className="hero-gradient-mesh" aria-hidden="true"></div>
+
           {/* Ambient Parallax Blobs */}
           <div className="blob-container blob-1-container">
             <div className="float-blob blob-1"></div>
@@ -142,109 +155,226 @@ function App() {
           </div>
 
           {/* Parallax Floating Tech Chips */}
-          <div className="floating-chip chip-1 select-none" style={{ top: '15%', left: '8%' }}>
-            <code>{`{"stream": "active"}`}</code>
+          <div className="floating-chip chip-1 select-none" style={{ top: '12%', left: '6%' }}>
+            <code>{`{"stream": true}`}</code>
           </div>
-          <div className="floating-chip chip-2 select-none" style={{ top: '42%', right: '8%' }}>
-            <code>{`01101011_sync`}</code>
+          <div className="floating-chip chip-2 select-none" style={{ top: '38%', right: '5%' }}>
+            <code>{`0x7F_SYNC_OK`}</code>
           </div>
-          <div className="floating-chip chip-3 select-none" style={{ top: '65%', left: '12%' }}>
+          <div className="floating-chip chip-3 select-none" style={{ top: '72%', left: '10%' }}>
             <code>{`db.commit()`}</code>
           </div>
+          <div className="floating-chip chip-4 select-none" style={{ top: '22%', right: '14%' }}>
+            <code>{`latency: 0.08ms`}</code>
+          </div>
+          <div className="floating-chip chip-5 select-none" style={{ top: '58%', right: '12%' }}>
+            <code>{`nodes: 4/4 ✓`}</code>
+          </div>
 
-          <div className="container" style={{ textAlign: 'center' }}>
+          <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
             <div className="animate-on-load">
               {/* Promo Badge */}
               <div className="promo-badge">
+                <div className="promo-badge-dot"></div>
                 <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '12px', height: '12px' }} />
-                <span>Cortexa v1.0.0 Now in Public Beta</span>
+                <span>Cortexa v1.0.0 — Now in Public Beta</span>
               </div>
               
               {/* Heading */}
-              <h1 id="hero-title" style={{ fontSize: '3.5rem', lineHeight: '1.1', maxWidth: '850px', margin: '0 auto 1.5rem', fontWeight: 800 }}>
-                {["Automate", "Your", "Data", "Pipelines", "with"].map((word, idx) => (
-                  <span key={idx} className="pop-word" style={{ '--word-idx': idx }}>
-                    {word}{" "}
-                  </span>
-                ))}
-                <span className="pop-word gradient-text" style={{ '--word-idx': 5 }}>
-                  AI-Precision
+              <h1 id="hero-title" className="hero-title">
+                {renderBouncyTitle("Automate Your Data Pipelines with ", 0)}
+                <span className="gradient-text">
+                  {renderBouncyTitle("AI-Precision", 35)}
                 </span>
               </h1>
               
               {/* Description */}
-              <p style={{ maxWidth: '650px', margin: '0 auto 2.5rem', fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-                Scale database operations, configure multi-currency transformations, and orchestrate pipeline clusters through a fluid, zero-dependency Bento UI.
+              <p className="hero-description animate-on-load animate-delay-1">
+                Deploy intelligent data pipelines that refine, route, and synchronize across multi-currency databases — with zero-dependency state isolation and sub-millisecond execution.
               </p>
               
               {/* Call to Actions */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                <a href="#pricing" className="btn-primary">
-                  <span>Get Started</span>
-                  <img src="/svgs/chevron-right.svg" alt="" style={{ width: '12px', height: '12px' }} />
+              <div className="hero-cta-row animate-on-load animate-delay-2">
+                <a href="#pricing" className="btn-primary btn-hero">
+                  <span>Deploy Your Core</span>
+                  <img src="/svgs/chevron-right.svg" alt="" style={{ width: '14px', height: '14px' }} />
                 </a>
-                <a href="#features" className="btn-secondary">
+                <a href="#features" className="btn-secondary btn-hero">
                   <span>Explore Features</span>
                   <img src="/svgs/cog-8-tooth.svg" alt="" style={{ width: '14px', height: '14px' }} />
                 </a>
               </div>
+
+              {/* Live Metrics Strip */}
+              <div className="hero-metrics-strip animate-on-load animate-delay-3">
+                <div className="hero-metric">
+                  <span className="hero-metric-value">12ms</span>
+                  <span className="hero-metric-label">Global Latency</span>
+                </div>
+                <div className="hero-metric-divider"></div>
+                <div className="hero-metric">
+                  <span className="hero-metric-value">48,102</span>
+                  <span className="hero-metric-label">Values / Cycle</span>
+                </div>
+                <div className="hero-metric-divider"></div>
+                <div className="hero-metric">
+                  <span className="hero-metric-value">0</span>
+                  <span className="hero-metric-label">Re-renders</span>
+                </div>
+                <div className="hero-metric-divider"></div>
+                <div className="hero-metric">
+                  <span className="hero-metric-value">99.9%</span>
+                  <span className="hero-metric-label">Uptime SLA</span>
+                </div>
+              </div>
             </div>
 
             {/* Scroll-Assembled Dashboard Stack */}
-            <div className="dashboard-assembly-wrapper animate-on-load animate-delay-2" aria-label="Cortexa pipeline console preview">
+            <div className="dashboard-assembly-wrapper animate-on-load animate-delay-3" aria-label="Cortexa pipeline console preview">
               
-              {/* Layer 1: Top Ingestion Card */}
-              <div className="assembly-layer layer-top glass-panel">
-                <div className="assembly-header">
-                  <div className="assembly-dots">
-                    <span className="dot dot-red"></span>
-                    <span className="dot dot-yellow"></span>
-                    <span className="dot dot-green"></span>
-                  </div>
-                  <span className="assembly-title">[INGESTION NODE]</span>
-                  <div className="assembly-badge badge-active">RUNNING</div>
+              {/* Browser Window Chrome */}
+              <div className="assembly-browser-chrome">
+                <div className="chrome-dots-row">
+                  <span className="chrome-dot chrome-dot-close"></span>
+                  <span className="chrome-dot chrome-dot-minimize"></span>
+                  <span className="chrome-dot chrome-dot-expand"></span>
                 </div>
-                <div className="assembly-body">
-                  <span className="cmd-symbol">&gt;</span> fetch: db_source_asia/users ... <span className="status-success">OK</span>
-                  <br />
-                  <span className="cmd-symbol">&gt;</span> queue: raw buffer ingest active [12.8 run/s]
+                <div className="chrome-url-bar">
+                  <span className="chrome-lock">🔒</span>
+                  <span>cortexa.io/pipeline/dashboard</span>
                 </div>
-              </div>
-
-              {/* Layer 2: Middle Refining Node */}
-              <div className="assembly-layer layer-middle glass-panel">
-                <div className="assembly-header">
-                  <div className="assembly-dots">
-                    <span className="dot dot-red"></span>
-                    <span className="dot dot-yellow"></span>
-                    <span className="dot dot-green"></span>
-                  </div>
-                  <span className="assembly-title">[PROCESSING CORE]</span>
-                  <div className="assembly-badge badge-process">REFINE</div>
-                </div>
-                <div className="assembly-body">
-                  <span className="cmd-symbol">&gt;</span> refine: parsed 48,102 variables [0.08ms]
-                  <br />
-                  <span className="cmd-symbol">&gt;</span> tariff: computed EUR/INR/USD exchange matrix
+                <div className="chrome-actions">
+                  <span className="chrome-action-dot"></span>
+                  <span className="chrome-action-dot"></span>
+                  <span className="chrome-action-dot"></span>
                 </div>
               </div>
 
-              {/* Layer 3: Bottom Target Node */}
-              <div className="assembly-layer layer-bottom glass-panel">
-                <div className="assembly-header">
-                  <div className="assembly-dots">
-                    <span className="dot dot-red"></span>
-                    <span className="dot dot-yellow"></span>
-                    <span className="dot dot-green"></span>
+              {/* Assembly Viewport */}
+              <div className="assembly-viewport">
+
+                {/* Layer 1: Top Ingestion Card */}
+                <div className="assembly-layer layer-top">
+                  <div className="assembly-header">
+                    <div className="assembly-dots">
+                      <div className="pulsing-dot"></div>
+                      <span className="assembly-title">[INGESTION NODE]</span>
+                    </div>
+                    <div className="assembly-badge badge-active">● LIVE</div>
                   </div>
-                  <span className="assembly-title">[DESTINATION SINK]</span>
-                  <div className="assembly-badge badge-sync">SYNCED</div>
+                  <div className="assembly-body">
+                    <div className="assembly-body-row">
+                      <div className="assembly-body-left">
+                        <span className="cmd-symbol">&gt;</span> Source: <span className="assembly-mono-bold">db_source_asia/users</span>
+                        <div className="assembly-sub-detail">Region: <span className="assembly-highlight">ap-south-1</span> &nbsp;|&nbsp; Schema: v4.2</div>
+                      </div>
+                      <div className="assembly-mini-stat">
+                        <span className="mini-stat-value">12.8</span>
+                        <span className="mini-stat-unit">RUN/S</span>
+                      </div>
+                    </div>
+                    <div className="buffered-stream-container">
+                      <div className="buffered-stream-bar"></div>
+                    </div>
+                    <div className="assembly-throughput-row">
+                      <div className="throughput-bar-group">
+                        <div className="throughput-bar" style={{ height: '60%' }}></div>
+                        <div className="throughput-bar" style={{ height: '80%' }}></div>
+                        <div className="throughput-bar" style={{ height: '45%' }}></div>
+                        <div className="throughput-bar" style={{ height: '90%' }}></div>
+                        <div className="throughput-bar" style={{ height: '70%' }}></div>
+                        <div className="throughput-bar throughput-bar-current" style={{ height: '95%' }}></div>
+                      </div>
+                      <span className="throughput-label">Throughput 6.2K/s ↑</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="assembly-body">
-                  <span className="cmd-symbol">&gt;</span> route: routing payload to sync-node-04
-                  <br />
-                  <span className="cmd-symbol">&gt;</span> status: synchronization lock persisted
+
+                {/* Connector Line 1 */}
+                <div className="assembly-connector">
+                  <div className="connector-line"></div>
+                  <div className="connector-pulse"></div>
                 </div>
+
+                {/* Layer 2: Middle Refining Node */}
+                <div className="assembly-layer layer-middle">
+                  <div className="assembly-header">
+                    <div className="assembly-dots">
+                      <span className="dot dot-yellow"></span>
+                      <span className="assembly-title">[PROCESSING CORE]</span>
+                    </div>
+                    <div className="assembly-badge badge-process">AI REFINE</div>
+                  </div>
+                  <div className="assembly-body">
+                    <div className="assembly-body-row">
+                      <div className="assembly-body-left">
+                        <span className="cmd-symbol">&gt;</span> Parsed <span className="assembly-mono-bold">48,102</span> values <span className="assembly-highlight">[0.08ms]</span>
+                      </div>
+                      <div className="assembly-mini-stat mini-stat-warn">
+                        <span className="mini-stat-value">0.08</span>
+                        <span className="mini-stat-unit">MS</span>
+                      </div>
+                    </div>
+                    <div className="pipeline-visual">
+                      <span className="visual-label">RAW</span>
+                      <div className="visual-line"><div className="data-packet"></div></div>
+                      <span className="visual-label accent-glow">AI PROCESS</span>
+                      <div className="visual-line"><div className="data-packet"></div></div>
+                      <span className="visual-label">REFINED</span>
+                    </div>
+                    <div className="assembly-tag-row">
+                      <span className="assembly-tag">Dedup</span>
+                      <span className="assembly-tag">NullFill</span>
+                      <span className="assembly-tag tag-accent">ML-Classify</span>
+                      <span className="assembly-tag">TypeCast</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Connector Line 2 */}
+                <div className="assembly-connector">
+                  <div className="connector-line"></div>
+                  <div className="connector-pulse connector-pulse-delay"></div>
+                </div>
+
+                {/* Layer 3: Bottom Target Node */}
+                <div className="assembly-layer layer-bottom">
+                  <div className="assembly-header">
+                    <div className="assembly-dots">
+                      <span className="dot dot-green"></span>
+                      <span className="assembly-title">[DESTINATION SINK]</span>
+                    </div>
+                    <div className="assembly-badge badge-sync">✓ SYNCED</div>
+                  </div>
+                  <div className="assembly-body">
+                    <div className="assembly-body-row">
+                      <div className="assembly-body-left">
+                        <span className="cmd-symbol">&gt;</span> Target: <span className="assembly-mono-bold">sync-node-04</span>
+                      </div>
+                      <div className="assembly-mini-stat mini-stat-success">
+                        <span className="mini-stat-value">OK</span>
+                        <span className="mini-stat-unit">200</span>
+                      </div>
+                    </div>
+                    <div className="sync-status-grid">
+                      <div className="sync-status-item">✔ Latency 12ms</div>
+                      <div className="sync-status-item">✔ Lock Active</div>
+                      <div className="sync-status-item">✔ Replication 3/3</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Assembly Footer Status Bar */}
+              <div className="assembly-footer">
+                <div className="footer-status-group">
+                  <span className="footer-status-dot footer-dot-green"></span>
+                  <span>Pipeline Healthy</span>
+                </div>
+                <span className="footer-separator">|</span>
+                <span>3 Nodes Active</span>
+                <span className="footer-separator">|</span>
+                <span>Last sync: 0.4s ago</span>
               </div>
 
             </div>
@@ -280,18 +410,18 @@ function App() {
         <div className="ticker-container" aria-hidden="true">
           <div className="ticker-track">
             <div className="ticker-list">
-              <span>⚡ AI DATA PIPELINES CORE</span>
-              <span>⚡ ZERO RE-RENDERS COMPUTE</span>
-              <span>⚡ SUB-MILLISECOND LATENCY</span>
-              <span>⚡ SECURE SYNC LOCK ACTIVE</span>
-              <span>⚡ MULTI-CURRENCY CONVERSION</span>
+              <span><span className="ticker-accent">⚡</span>AI DATA PIPELINES CORE</span>
+              <span><span className="ticker-accent">⚡</span>ZERO RE-RENDERS COMPUTE</span>
+              <span><span className="ticker-accent">⚡</span>SUB-MILLISECOND LATENCY</span>
+              <span><span className="ticker-accent">⚡</span>SECURE SYNC LOCK ACTIVE</span>
+              <span><span className="ticker-accent">⚡</span>MULTI-CURRENCY CONVERSION</span>
             </div>
             <div className="ticker-list">
-              <span>⚡ AI DATA PIPELINES CORE</span>
-              <span>⚡ ZERO RE-RENDERS COMPUTE</span>
-              <span>⚡ SUB-MILLISECOND LATENCY</span>
-              <span>⚡ SECURE SYNC LOCK ACTIVE</span>
-              <span>⚡ MULTI-CURRENCY CONVERSION</span>
+              <span><span className="ticker-accent">⚡</span>AI DATA PIPELINES CORE</span>
+              <span><span className="ticker-accent">⚡</span>ZERO RE-RENDERS COMPUTE</span>
+              <span><span className="ticker-accent">⚡</span>SUB-MILLISECOND LATENCY</span>
+              <span><span className="ticker-accent">⚡</span>SECURE SYNC LOCK ACTIVE</span>
+              <span><span className="ticker-accent">⚡</span>MULTI-CURRENCY CONVERSION</span>
             </div>
           </div>
         </div>
