@@ -1,5 +1,7 @@
 import React from 'react'
 import BentoGrid from './components/BentoGrid'
+import Pricing from './components/Pricing'
+
 
 
 function App() {
@@ -52,12 +54,10 @@ function App() {
           <BentoGrid />
         </section>
 
-        {/* Pricing Matrix Skeleton */}
+        {/* Pricing Matrix */}
         <section id="pricing" className="container" aria-labelledby="pricing-title">
           <h2 id="pricing-title" style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2rem' }}>Predictable, Performance-Isolated Plans</h2>
-          <div style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed var(--border-color)', borderRadius: '16px', color: 'var(--text-secondary)' }}>
-            [Performance-Isolated Pricing Section - Coming in Task 4]
-          </div>
+          <Pricing />
         </section>
       </main>
 
