@@ -6,7 +6,7 @@ const FEATURES = [
     title: 'Autonomous Data Refinement',
     description: 'Clean, normalize, and structure raw database feeds using real-time machine learning pipelines with zero manual intervention.',
     icon: '/svgs/cog-8-tooth.svg',
-    tag: 'AI-POWERED',
+    
     number: '01',
     widget: () => (
       <div className="widget-refine">
@@ -35,7 +35,7 @@ const FEATURES = [
     title: 'Predictive Velocity Engine',
     description: 'Automatically route message payloads to optimize server throughput and minimize queue latency across regions.',
     icon: '/svgs/arrow-trending-up.svg',
-    tag: 'REAL-TIME',
+    
     number: '02',
     widget: () => (
       <div className="widget-velocity">
@@ -58,7 +58,7 @@ const FEATURES = [
     title: 'Multi-Cluster Integrations',
     description: 'Secure node synchronization guarantees across hybrid cloud container groups with automatic failover.',
     icon: '/svgs/cube-16-solid.svg',
-    tag: 'DISTRIBUTED',
+    
     number: '03',
     widget: () => (
       <div className="widget-cluster">
@@ -92,7 +92,7 @@ const FEATURES = [
     title: 'Live Pipeline Insights',
     description: 'Real-time visual tracking of data flow, anomaly counts, and metric telemetry across all active nodes.',
     icon: '/svgs/chart-pie.svg',
-    tag: 'MONITORING',
+    
     number: '04',
     widget: () => (
       <div className="widget-insights">

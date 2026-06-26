@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import BentoGrid from './components/BentoGrid'
 import Pricing from './components/Pricing'
 
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const renderBouncyTitle = (text, startIdx) => {
     return text.split("").map((char, charIdx) => {
       const idx = startIdx + charIdx;
@@ -103,35 +104,55 @@ function App() {
 
       {/* Sticky Navigation Header */}
       <header className="sticky-header" id="site-header">
-        <div className="container" style={{ padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} className="animate-on-load">
+        <div className="container nav-container">
+          <div className="nav-logo animate-on-load">
             <img src="/svgs/cube-16-solid.svg" alt="" style={{ width: '24px', height: '24px' }} />
-            <span style={{ fontFamily: 'var(--font-headers)', fontWeight: 'bold', fontSize: '1.2rem', letterSpacing: '-0.04em' }}>CORTEXA</span>
+            <span>CORTEXA</span>
           </div>
-          <nav aria-label="Primary Navigation" className="animate-on-load animate-delay-1">
-            <ul style={{ display: 'flex', listStyle: 'none', gap: '2rem', fontFamily: 'var(--font-headers)', fontSize: '0.85rem' }}>
-              <li>
-                <a href="#features" style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color var(--transition-fast) ease-out' }}>
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color var(--transition-fast) ease-out' }}>
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#tech-specs" style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color var(--transition-fast) ease-out' }}>
-                  Specs
+          
+          {/* Desktop Nav */}
+          <nav aria-label="Primary Navigation" className="desktop-nav animate-on-load animate-delay-1">
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+              <li><a href="#tech-specs">Specs</a></li>
+            </ul>
+          </nav>
+          
+          {/* Desktop CTA */}
+          <div className="desktop-cta animate-on-load animate-delay-2">
+            <a href="#pricing" className="btn-primary">
+              Deploy Core
+            </a>
+          </div>
+
+          {/* Hamburger Menu Button */}
+          <button 
+            className={`hamburger-btn ${isMobileMenuOpen ? 'active' : ''}`} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Navigation Menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+          <nav aria-label="Mobile Navigation">
+            <ul>
+              <li><a href="#features" onClick={() => setIsMobileMenuOpen(false)}>Features</a></li>
+              <li><a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a></li>
+              <li><a href="#tech-specs" onClick={() => setIsMobileMenuOpen(false)}>Specs</a></li>
+              <li className="mobile-cta-li">
+                <a href="#pricing" className="btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                  Deploy Core
                 </a>
               </li>
             </ul>
           </nav>
-          <div className="animate-on-load animate-delay-2">
-            <a href="#pricing" className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
-              Deploy Core
-            </a>
-          </div>
         </div>
       </header>
 
@@ -183,24 +204,21 @@ function App() {
 
           <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
             <div className="animate-on-load">
-              {/* Promo Badge */}
-              <div className="promo-badge">
-                <div className="promo-badge-dot"></div>
-                <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '12px', height: '12px' }} />
-                <span>Cortexa v1.0.0 — Now in Public Beta</span>
-              </div>
-              
               {/* Heading */}
               <h1 id="hero-title" className="hero-title">
-                {renderBouncyTitle("Automate Your Data Pipelines with ", 0)}
-                <span className="gradient-text">
-                  {renderBouncyTitle("AI-Precision", 35)}
+                {renderBouncyTitle("Automate Your Data ", 0)}
+                <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                  {renderBouncyTitle("Pipelines", 19)}
+                </span>
+                {renderBouncyTitle(" with ", 28)}
+                <span className="gradient-text" style={{ whiteSpace: 'nowrap' }}>
+                  {renderBouncyTitle("AI-Precision", 34)}
                 </span>
               </h1>
               
               {/* Description */}
               <p className="hero-description animate-on-load animate-delay-1">
-                Deploy intelligent data pipelines that refine, route, and synchronize across multi-currency databases — with zero-dependency state isolation and sub-millisecond execution.
+                Deploy intelligent data pipelines that refine, route, and synchronize across multi-currency databases with zero-dependency state isolation and sub-millisecond execution.
               </p>
               
               {/* Call to Actions */}
@@ -270,7 +288,7 @@ function App() {
                       <div className="pulsing-dot"></div>
                       <span className="assembly-title">[INGESTION NODE]</span>
                     </div>
-                    <div className="assembly-badge badge-active">● LIVE</div>
+                    
                   </div>
                   <div className="assembly-body">
                     <div className="assembly-body-row">
@@ -313,7 +331,7 @@ function App() {
                       <span className="dot dot-yellow"></span>
                       <span className="assembly-title">[PROCESSING CORE]</span>
                     </div>
-                    <div className="assembly-badge badge-process">AI REFINE</div>
+                    
                   </div>
                   <div className="assembly-body">
                     <div className="assembly-body-row">
@@ -354,7 +372,7 @@ function App() {
                       <span className="dot dot-green"></span>
                       <span className="assembly-title">[DESTINATION SINK]</span>
                     </div>
-                    <div className="assembly-badge badge-sync">✓ SYNCED</div>
+                    
                   </div>
                   <div className="assembly-body">
                     <div className="assembly-body-row">
@@ -475,10 +493,6 @@ function App() {
         <section id="features" aria-labelledby="features-title" className="features-section reveal-on-scroll">
           <div className="container">
             <div className="features-header">
-              <div className="features-badge">
-                <img src="/svgs/cog-8-tooth.svg" alt="" style={{ width: '12px', height: '12px' }} />
-                <span>Core Engine</span>
-              </div>
               <h2 id="features-title" className="features-title">Engineered for Performance</h2>
               <p className="features-subtitle">
                 Four distinct modules powering autonomous data refinement, predictive routing, multi-cluster sync, and real-time pipeline telemetry — all running in zero-dependency isolation.
@@ -493,13 +507,9 @@ function App() {
         <section id="pricing" aria-labelledby="pricing-title" className="pricing-section reveal-on-scroll">
           <div className="container">
             <div className="pricing-section-header">
-              <div className="pricing-section-badge">
-                <img src="/svgs/chart-pie.svg" alt="" style={{ width: '12px', height: '12px' }} />
-                <span>Transparent Pricing</span>
-              </div>
               <h2 id="pricing-title" className="pricing-section-title">Flexible Developer Pricing</h2>
               <p className="pricing-section-subtitle">
-                Toggle currencies and billing cycles — prices compute instantly via a multi-dimensional matrix engine with zero parent re-renders.
+                Toggle currencies and billing cycles prices compute instantly via a multi-dimensional matrix engine with zero parent re-renders.
               </p>
               <div className="features-accent-line" aria-hidden="true"></div>
             </div>
@@ -511,10 +521,6 @@ function App() {
         <section id="tech-specs" aria-labelledby="specs-title" className="specs-section reveal-on-scroll">
           <div className="container">
             <div className="specs-header">
-              <div className="specs-badge">
-                <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '12px', height: '12px' }} />
-                <span>Under the Hood</span>
-              </div>
               <h2 id="specs-title" className="specs-title">Technical Specifications</h2>
               <p className="specs-subtitle">
                 Low-level engine details engineered for sub-millisecond execution, zero state bloat, and cryptographically-verified cluster synchronization.
@@ -618,10 +624,7 @@ function App() {
               <p className="footer-brand-desc">
                 Advanced AI-driven automation for database streams, multi-currency transactions, and autonomous pipeline orchestration.
               </p>
-              <div className="footer-brand-stat">
-                <span className="footer-stat-dot"></span>
-                <span>99.9% Uptime SLA</span>
-              </div>
+              
             </div>
 
             {/* Nav Columns */}
@@ -668,11 +671,8 @@ function App() {
               CORTEXA &copy; {new Date().getFullYear()}. All Rights Reserved.
             </span>
             <div className="footer-bottom-right">
-              <div className="footer-status-indicator">
-                <span className="footer-live-dot"></span>
-                <span>All Systems Operational</span>
-              </div>
-              <span className="footer-version-tag">v1.0.0-beta</span>
+              
+              
             </div>
           </div>
         </div>
