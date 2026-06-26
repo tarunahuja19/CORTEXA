@@ -406,47 +406,92 @@ function App() {
           </div>
         </section>
 
-        {/* Infinite Horizontal Marquee Ticker */}
-        <div className="ticker-container" aria-hidden="true">
-          <div className="ticker-track">
-            <div className="ticker-list">
-              <span><span className="ticker-accent">⚡</span>AI DATA PIPELINES CORE</span>
-              <span><span className="ticker-accent">⚡</span>ZERO RE-RENDERS COMPUTE</span>
-              <span><span className="ticker-accent">⚡</span>SUB-MILLISECOND LATENCY</span>
-              <span><span className="ticker-accent">⚡</span>SECURE SYNC LOCK ACTIVE</span>
-              <span><span className="ticker-accent">⚡</span>MULTI-CURRENCY CONVERSION</span>
+        {/* Infinite Horizontal Marquee Ticker — Premium Double Row */}
+        <div className="ticker-section" aria-hidden="true">
+          {/* Edge Fade Overlays */}
+          <div className="ticker-fade ticker-fade-left"></div>
+          <div className="ticker-fade ticker-fade-right"></div>
+
+          {/* Row 1 — Scrolls Left */}
+          <div className="ticker-row">
+            <div className="ticker-track">
+              <div className="ticker-list">
+                <span><span className="ticker-dot"></span>AI DATA PIPELINES CORE</span>
+                <span><span className="ticker-dot"></span>ZERO RE-RENDERS COMPUTE</span>
+                <span><span className="ticker-dot"></span>SUB-MILLISECOND LATENCY</span>
+                <span><span className="ticker-dot"></span>SECURE SYNC LOCK ACTIVE</span>
+                <span><span className="ticker-dot"></span>MULTI-CURRENCY ENGINE</span>
+                <span><span className="ticker-dot"></span>BENTO STATE ISOLATION</span>
+                <span><span className="ticker-dot"></span>HARDWARE-ACCELERATED CSS</span>
+              </div>
+              <div className="ticker-list">
+                <span><span className="ticker-dot"></span>AI DATA PIPELINES CORE</span>
+                <span><span className="ticker-dot"></span>ZERO RE-RENDERS COMPUTE</span>
+                <span><span className="ticker-dot"></span>SUB-MILLISECOND LATENCY</span>
+                <span><span className="ticker-dot"></span>SECURE SYNC LOCK ACTIVE</span>
+                <span><span className="ticker-dot"></span>MULTI-CURRENCY ENGINE</span>
+                <span><span className="ticker-dot"></span>BENTO STATE ISOLATION</span>
+                <span><span className="ticker-dot"></span>HARDWARE-ACCELERATED CSS</span>
+              </div>
             </div>
-            <div className="ticker-list">
-              <span><span className="ticker-accent">⚡</span>AI DATA PIPELINES CORE</span>
-              <span><span className="ticker-accent">⚡</span>ZERO RE-RENDERS COMPUTE</span>
-              <span><span className="ticker-accent">⚡</span>SUB-MILLISECOND LATENCY</span>
-              <span><span className="ticker-accent">⚡</span>SECURE SYNC LOCK ACTIVE</span>
-              <span><span className="ticker-accent">⚡</span>MULTI-CURRENCY CONVERSION</span>
+          </div>
+
+          {/* Row 2 — Scrolls Right (reversed) */}
+          <div className="ticker-row">
+            <div className="ticker-track ticker-track-reverse">
+              <div className="ticker-list">
+                <span><span className="ticker-dot ticker-dot-accent"></span>AUTONOMOUS REFINE</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>PREDICTIVE VELOCITY</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>CLUSTER INTEGRATIONS</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>PIPELINE TELEMETRY</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>SCHEMA VALIDATION</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>EDGE NODE ROUTING</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>REAL-TIME INSIGHTS</span>
+              </div>
+              <div className="ticker-list">
+                <span><span className="ticker-dot ticker-dot-accent"></span>AUTONOMOUS REFINE</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>PREDICTIVE VELOCITY</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>CLUSTER INTEGRATIONS</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>PIPELINE TELEMETRY</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>SCHEMA VALIDATION</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>EDGE NODE ROUTING</span>
+                <span><span className="ticker-dot ticker-dot-accent"></span>REAL-TIME INSIGHTS</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bento Features Section */}
-        <section id="features" aria-labelledby="features-title" className="reveal-on-scroll" style={{ padding: '5rem 0' }}>
+        <section id="features" aria-labelledby="features-title" className="features-section reveal-on-scroll">
           <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <h2 id="features-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Engineered for Performance</h2>
-              <p style={{ color: 'var(--text-secondary)', maxWidth: '550px', margin: '0 auto' }}>
-                Explore four distinct core engine features showing our multi-cluster sync capability and autonomous data refining pipeline.
+            <div className="features-header">
+              <div className="features-badge">
+                <img src="/svgs/cog-8-tooth.svg" alt="" style={{ width: '12px', height: '12px' }} />
+                <span>Core Engine</span>
+              </div>
+              <h2 id="features-title" className="features-title">Engineered for Performance</h2>
+              <p className="features-subtitle">
+                Four distinct modules powering autonomous data refinement, predictive routing, multi-cluster sync, and real-time pipeline telemetry — all running in zero-dependency isolation.
               </p>
+              <div className="features-accent-line" aria-hidden="true"></div>
             </div>
             <BentoGrid />
           </div>
         </section>
 
         {/* Pricing Switcher Section */}
-        <section id="pricing" aria-labelledby="pricing-title" className="reveal-on-scroll" style={{ padding: '5rem 0' }}>
+        <section id="pricing" aria-labelledby="pricing-title" className="pricing-section reveal-on-scroll">
           <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <h2 id="pricing-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Flexible Developer Pricing</h2>
-              <p style={{ color: 'var(--text-secondary)', maxWidth: '550px', margin: '0 auto' }}>
-                Toggle currencies and cycles. Watch values compute instantly without triggering unnecessary global component re-renders.
+            <div className="pricing-section-header">
+              <div className="pricing-section-badge">
+                <img src="/svgs/chart-pie.svg" alt="" style={{ width: '12px', height: '12px' }} />
+                <span>Transparent Pricing</span>
+              </div>
+              <h2 id="pricing-title" className="pricing-section-title">Flexible Developer Pricing</h2>
+              <p className="pricing-section-subtitle">
+                Toggle currencies and billing cycles — prices compute instantly via a multi-dimensional matrix engine with zero parent re-renders.
               </p>
+              <div className="features-accent-line" aria-hidden="true"></div>
             </div>
             <Pricing />
           </div>

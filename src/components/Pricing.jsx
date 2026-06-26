@@ -67,7 +67,6 @@ function Pricing() {
       // Mutate the supplementary billing terms directly
       if (billingInfoRefs[tierKey].current) {
         if (cycle === 'annual') {
-          // Billed annually calculation
           const totalAnnual = calculatePrice(tierKey, currency, 'monthly') * 12 * 0.8
           billingInfoRefs[tierKey].current.textContent = `Billed annually (${symbol}${Math.round(totalAnnual)}/yr)`
         } else {
@@ -124,7 +123,8 @@ function Pricing() {
             onClick={() => handleCycleSelect('annual')}
             aria-label="Toggle Annual billing cycle with 20 percent discount"
           >
-            Annual (Save 20%)
+            Annual
+            <span className="annual-save-tag">-20%</span>
           </button>
         </div>
 
@@ -150,8 +150,14 @@ function Pricing() {
         {/* Starter Plan Card */}
         <div className="pricing-card">
           <div>
+            <div className="tier-label-row">
+              <span className="tier-icon-circle">
+                <img src="/svgs/link.svg" alt="" style={{ width: '14px', height: '14px' }} />
+              </span>
+              <span className="tier-tier-tag">STARTER</span>
+            </div>
             <h3 className="tier-name">Core Integration</h3>
-            <p className="tier-desc">Ideal for developer sandboxes, API experiments, and prototype staging.</p>
+            <p className="tier-desc">Ideal for developer sandboxes, API experiments, and prototype staging environments.</p>
             <div className="price-container">
               <div className="price-row">
                 <span ref={pricesRefs.starter} className="price-val">$19</span>
@@ -159,34 +165,49 @@ function Pricing() {
               </div>
               <span ref={billingInfoRefs.starter} className="billing-info">Billed monthly</span>
             </div>
+            <div className="pricing-divider"></div>
             <ul className="pricing-features-list">
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>1 Live pipeline channel</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>10,000 Pipeline runs/mo</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>Basic latency logs</span>
               </li>
-              <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" style={{ opacity: 0.2 }} />
-                <span style={{ opacity: 0.5 }}>Autonomous refinement</span>
+              <li className="pricing-feature-item pricing-feature-disabled">
+                <span className="pricing-check">–</span>
+                <span>Autonomous refinement</span>
+              </li>
+              <li className="pricing-feature-item pricing-feature-disabled">
+                <span className="pricing-check">–</span>
+                <span>Priority support SLA</span>
               </li>
             </ul>
           </div>
-          <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>Deploy Core</button>
+          <button className="btn-secondary pricing-cta">
+            <span>Deploy Core</span>
+            <img src="/svgs/chevron-right.svg" alt="" style={{ width: '12px', height: '12px' }} />
+          </button>
         </div>
 
         {/* Professional Plan Card (Featured) */}
         <div className="pricing-card pricing-card-recommended">
-          <div className="pricing-badge">Popular</div>
+          <div className="pricing-badge">Most Popular</div>
+          <div className="pricing-card-glow" aria-hidden="true"></div>
           <div>
+            <div className="tier-label-row">
+              <span className="tier-icon-circle tier-icon-accent">
+                <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '14px', height: '14px' }} />
+              </span>
+              <span className="tier-tier-tag tier-tag-accent">PROFESSIONAL</span>
+            </div>
             <h3 className="tier-name">Pipeline Suite</h3>
-            <p className="tier-desc">Perfect for production workloads, high-volume automation, and active systems.</p>
+            <p className="tier-desc">Perfect for production workloads, high-volume automation, and active multi-team systems.</p>
             <div className="price-container">
               <div className="price-row">
                 <span ref={pricesRefs.professional} className="price-val">$49</span>
@@ -194,33 +215,47 @@ function Pricing() {
               </div>
               <span ref={billingInfoRefs.professional} className="billing-info">Billed monthly</span>
             </div>
+            <div className="pricing-divider pricing-divider-accent"></div>
             <ul className="pricing-features-list">
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check pricing-check-accent">✓</span>
                 <span>Unlimited pipelines</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check pricing-check-accent">✓</span>
                 <span>250,000 Pipeline runs/mo</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check pricing-check-accent">✓</span>
                 <span>Autonomous data refinement</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check pricing-check-accent">✓</span>
                 <span>Priority support SLA</span>
+              </li>
+              <li className="pricing-feature-item">
+                <span className="pricing-check pricing-check-accent">✓</span>
+                <span>Multi-cluster sync</span>
               </li>
             </ul>
           </div>
-          <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Launch Suite</button>
+          <button className="btn-primary pricing-cta">
+            <span>Launch Suite</span>
+            <img src="/svgs/chevron-right.svg" alt="" style={{ width: '12px', height: '12px' }} />
+          </button>
         </div>
 
         {/* Enterprise Plan Card */}
         <div className="pricing-card">
           <div>
+            <div className="tier-label-row">
+              <span className="tier-icon-circle">
+                <img src="/svgs/cube-16-solid.svg" alt="" style={{ width: '14px', height: '14px' }} />
+              </span>
+              <span className="tier-tier-tag">ENTERPRISE</span>
+            </div>
             <h3 className="tier-name">Enterprise Core</h3>
-            <p className="tier-desc">Custom scalability for security-first enterprises and massive databases.</p>
+            <p className="tier-desc">Custom scalability for security-first enterprises with massive database operations.</p>
             <div className="price-container">
               <div className="price-row">
                 <span ref={pricesRefs.enterprise} className="price-val">$99</span>
@@ -228,26 +263,34 @@ function Pricing() {
               </div>
               <span ref={billingInfoRefs.enterprise} className="billing-info">Billed monthly</span>
             </div>
+            <div className="pricing-divider"></div>
             <ul className="pricing-features-list">
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>Dedicated container clusters</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>Unlimited pipeline runs</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>Custom refinement filters</span>
               </li>
               <li className="pricing-feature-item">
-                <img src="/svgs/link.svg" alt="" className="pricing-feature-check" />
+                <span className="pricing-check">✓</span>
                 <span>24/7 Dedicated hot-line</span>
+              </li>
+              <li className="pricing-feature-item">
+                <span className="pricing-check">✓</span>
+                <span>SSO & audit logging</span>
               </li>
             </ul>
           </div>
-          <button className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>Request Specs</button>
+          <button className="btn-secondary pricing-cta">
+            <span>Request Specs</span>
+            <img src="/svgs/chevron-right.svg" alt="" style={{ width: '12px', height: '12px' }} />
+          </button>
         </div>
       </div>
     </div>
