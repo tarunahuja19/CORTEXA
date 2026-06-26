@@ -1,8 +1,89 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BentoGrid from './components/BentoGrid'
 import Pricing from './components/Pricing'
 
+
 function App() {
+  useEffect(() => {
+    // 1. Entry Loader Coordination
+    const loaderTimeout = setTimeout(() => {
+      document.body.classList.add('loaded');
+      const loader = document.getElementById('entry-loader');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 300);
+      }
+    }, 450);
+
+    // 2. Scroll-Driven Reveal (IntersectionObserver)
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          if (entry.target.id === 'features') {
+            const cards = entry.target.querySelectorAll('.bento-card');
+            cards.forEach((card, idx) => {
+              card.style.transitionDelay = `${idx * 100}ms`;
+            });
+          }
+          if (entry.target.id === 'pricing') {
+            const pricingCards = entry.target.querySelectorAll('.pricing-card');
+            pricingCards.forEach((card, idx) => {
+              card.style.transitionDelay = `${idx * 100}ms`;
+            });
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    revealElements.forEach((el) => observer.observe(el));
+
+    // 3. Interactive Mouse-Move Parallax for Blobs
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      const xPct = (clientX / window.innerWidth - 0.5) * 35;
+      const yPct = (clientY / window.innerHeight - 0.5) * 35;
+      
+      document.documentElement.style.setProperty('--mouse-offset-x', `${xPct}px`);
+      document.documentElement.style.setProperty('--mouse-offset-y', `${yPct}px`);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // 4. Scroll Assembly and Parallax tracking
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      
+      // Calculate assembly percentage: 0 at scrollY=0, 1 at scrollY=450 (clamped)
+      const assemblyThreshold = 450;
+      const assemblyPct = Math.min(scrollY / assemblyThreshold, 1);
+      document.documentElement.style.setProperty('--assembly-pct', assemblyPct.toString());
+      
+      // Calculate parallax scroll values
+      document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // initialize on load
+
+    return () => {
+      clearTimeout(loaderTimeout);
+      observer.disconnect();
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {/* Performance-Isolated CSS Loader (Completes within 500ms orchestration window) */}
@@ -48,7 +129,29 @@ function App() {
       <main id="main-content">
         
         {/* Hero Section */}
-        <section id="hero" aria-labelledby="hero-title" style={{ padding: '6rem 0 4rem 0' }}>
+        <section id="hero" aria-labelledby="hero-title" style={{ padding: '6rem 0 4rem 0', position: 'relative', isolation: 'isolate', overflow: 'hidden' }}>
+          {/* Ambient Parallax Blobs */}
+          <div className="blob-container blob-1-container">
+            <div className="float-blob blob-1"></div>
+          </div>
+          <div className="blob-container blob-2-container">
+            <div className="float-blob blob-2"></div>
+          </div>
+          <div className="blob-container blob-3-container">
+            <div className="float-blob blob-3"></div>
+          </div>
+
+          {/* Parallax Floating Tech Chips */}
+          <div className="floating-chip chip-1 select-none" style={{ top: '15%', left: '8%' }}>
+            <code>{`{"stream": "active"}`}</code>
+          </div>
+          <div className="floating-chip chip-2 select-none" style={{ top: '42%', right: '8%' }}>
+            <code>{`01101011_sync`}</code>
+          </div>
+          <div className="floating-chip chip-3 select-none" style={{ top: '65%', left: '12%' }}>
+            <code>{`db.commit()`}</code>
+          </div>
+
           <div className="container" style={{ textAlign: 'center' }}>
             <div className="animate-on-load">
               {/* Promo Badge */}
@@ -59,7 +162,14 @@ function App() {
               
               {/* Heading */}
               <h1 id="hero-title" style={{ fontSize: '3.5rem', lineHeight: '1.1', maxWidth: '850px', margin: '0 auto 1.5rem', fontWeight: 800 }}>
-                Automate Your Data Pipelines with <span className="gradient-text">AI-Precision</span>
+                {["Automate", "Your", "Data", "Pipelines", "with"].map((word, idx) => (
+                  <span key={idx} className="pop-word" style={{ '--word-idx': idx }}>
+                    {word}{" "}
+                  </span>
+                ))}
+                <span className="pop-word gradient-text" style={{ '--word-idx': 5 }}>
+                  AI-Precision
+                </span>
               </h1>
               
               {/* Description */}
@@ -80,60 +190,69 @@ function App() {
               </div>
             </div>
 
-            {/* Simulated Live Terminal Dashboard */}
-            <div className="hero-dashboard-preview animate-on-load animate-delay-2" aria-label="Cortexa pipeline console preview">
-              <div className="hero-dashboard-header">
-                <div className="hero-dashboard-dots">
-                  <div className="hero-dashboard-dot"></div>
-                  <div className="hero-dashboard-dot"></div>
-                  <div className="hero-dashboard-dot"></div>
-                </div>
-                <div className="hero-dashboard-title">pipeline-monitor@cortexa: ~</div>
-                <div style={{ width: '40px' }}></div>
-              </div>
+            {/* Scroll-Assembled Dashboard Stack */}
+            <div className="dashboard-assembly-wrapper animate-on-load animate-delay-2" aria-label="Cortexa pipeline console preview">
               
-              <div className="hero-dashboard-body">
-                {/* Live stream */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', borderRight: '1px solid var(--border-color)', paddingRight: '1.5rem' }}>
-                  <div style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', borderBottom: '1px solid rgba(217, 232, 226, 0.08)', paddingBottom: '0.25rem', fontWeight: 'bold' }}>
-                    [LIVE DATA STREAM]
+              {/* Layer 1: Top Ingestion Card */}
+              <div className="assembly-layer layer-top glass-panel">
+                <div className="assembly-header">
+                  <div className="assembly-dots">
+                    <span className="dot dot-red"></span>
+                    <span className="dot dot-yellow"></span>
+                    <span className="dot dot-green"></span>
                   </div>
-                  <div style={{ fontSize: '0.75rem', opacity: 0.65 }}>&gt; fetch: db_source_asia/users ... OK</div>
-                  <div style={{ fontSize: '0.75rem', opacity: 0.8 }}>&gt; refine: parsed 48,102 values [0.08ms]</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--accent-secondary)' }}>&gt; tariff: computed EUR exchange variables</div>
-                  <div style={{ fontSize: '0.75rem', color: '#10B981' }}>&gt; queue: routing payload to sync-node-04</div>
-                  <div style={{ fontSize: '0.75rem', opacity: 0.4 }}>&gt; standing by for raw buffer ingest...</div>
+                  <span className="assembly-title">[INGESTION NODE]</span>
+                  <div className="assembly-badge badge-active">RUNNING</div>
                 </div>
-                
-                {/* Active route statistics */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <div style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', borderBottom: '1px solid rgba(217, 232, 226, 0.08)', paddingBottom: '0.25rem', fontWeight: 'bold' }}>
-                    [ACTIVE PIPELINES]
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-                    <span>Pipeline Clusters:</span>
-                    <span style={{ color: 'var(--accent-secondary)' }}>4 Nodes Online</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-                    <span>Global Latency:</span>
-                    <span style={{ color: '#10B981' }}>12ms average</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-                    <span>Throughput:</span>
-                    <span style={{ color: 'var(--text-primary)' }}>12,850 runs/sec</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-                    <span>Data Sync Lock:</span>
-                    <span style={{ color: '#10B981' }}>Persisted</span>
-                  </div>
+                <div className="assembly-body">
+                  <span className="cmd-symbol">&gt;</span> fetch: db_source_asia/users ... <span className="status-success">OK</span>
+                  <br />
+                  <span className="cmd-symbol">&gt;</span> queue: raw buffer ingest active [12.8 run/s]
                 </div>
               </div>
+
+              {/* Layer 2: Middle Refining Node */}
+              <div className="assembly-layer layer-middle glass-panel">
+                <div className="assembly-header">
+                  <div className="assembly-dots">
+                    <span className="dot dot-red"></span>
+                    <span className="dot dot-yellow"></span>
+                    <span className="dot dot-green"></span>
+                  </div>
+                  <span className="assembly-title">[PROCESSING CORE]</span>
+                  <div className="assembly-badge badge-process">REFINE</div>
+                </div>
+                <div className="assembly-body">
+                  <span className="cmd-symbol">&gt;</span> refine: parsed 48,102 variables [0.08ms]
+                  <br />
+                  <span className="cmd-symbol">&gt;</span> tariff: computed EUR/INR/USD exchange matrix
+                </div>
+              </div>
+
+              {/* Layer 3: Bottom Target Node */}
+              <div className="assembly-layer layer-bottom glass-panel">
+                <div className="assembly-header">
+                  <div className="assembly-dots">
+                    <span className="dot dot-red"></span>
+                    <span className="dot dot-yellow"></span>
+                    <span className="dot dot-green"></span>
+                  </div>
+                  <span className="assembly-title">[DESTINATION SINK]</span>
+                  <div className="assembly-badge badge-sync">SYNCED</div>
+                </div>
+                <div className="assembly-body">
+                  <span className="cmd-symbol">&gt;</span> route: routing payload to sync-node-04
+                  <br />
+                  <span className="cmd-symbol">&gt;</span> status: synchronization lock persisted
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
 
         {/* Social Proof Brand Bar */}
-        <section className="social-proof-section" aria-label="Customer proof">
+        <section className="social-proof-section reveal-on-scroll" aria-label="Customer proof">
           <div className="container">
             <h2 className="social-proof-title">Trusted by Modern Data Engineering Teams</h2>
             <div className="brand-logos-container">
@@ -157,8 +276,28 @@ function App() {
           </div>
         </section>
 
+        {/* Infinite Horizontal Marquee Ticker */}
+        <div className="ticker-container" aria-hidden="true">
+          <div className="ticker-track">
+            <div className="ticker-list">
+              <span>⚡ AI DATA PIPELINES CORE</span>
+              <span>⚡ ZERO RE-RENDERS COMPUTE</span>
+              <span>⚡ SUB-MILLISECOND LATENCY</span>
+              <span>⚡ SECURE SYNC LOCK ACTIVE</span>
+              <span>⚡ MULTI-CURRENCY CONVERSION</span>
+            </div>
+            <div className="ticker-list">
+              <span>⚡ AI DATA PIPELINES CORE</span>
+              <span>⚡ ZERO RE-RENDERS COMPUTE</span>
+              <span>⚡ SUB-MILLISECOND LATENCY</span>
+              <span>⚡ SECURE SYNC LOCK ACTIVE</span>
+              <span>⚡ MULTI-CURRENCY CONVERSION</span>
+            </div>
+          </div>
+        </div>
+
         {/* Bento Features Section */}
-        <section id="features" aria-labelledby="features-title" style={{ padding: '5rem 0' }}>
+        <section id="features" aria-labelledby="features-title" className="reveal-on-scroll" style={{ padding: '5rem 0' }}>
           <div className="container">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <h2 id="features-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Engineered for Performance</h2>
@@ -171,7 +310,7 @@ function App() {
         </section>
 
         {/* Pricing Switcher Section */}
-        <section id="pricing" aria-labelledby="pricing-title" style={{ padding: '5rem 0' }}>
+        <section id="pricing" aria-labelledby="pricing-title" className="reveal-on-scroll" style={{ padding: '5rem 0' }}>
           <div className="container">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <h2 id="pricing-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Flexible Developer Pricing</h2>
@@ -184,7 +323,7 @@ function App() {
         </section>
 
         {/* Technical Specifications Section */}
-        <section id="tech-specs" aria-labelledby="specs-title" style={{ padding: '5rem 0', borderTop: '1px solid var(--border-color)' }}>
+        <section id="tech-specs" aria-labelledby="specs-title" className="reveal-on-scroll" style={{ padding: '5rem 0', borderTop: '1px solid var(--border-color)' }}>
           <div className="container">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <h2 id="specs-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Technical Specifications</h2>
@@ -224,7 +363,7 @@ function App() {
       </main>
 
       {/* Footer Area */}
-      <footer id="site-footer" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', padding: '4rem 0 3rem 0' }}>
+      <footer id="site-footer" className="reveal-on-scroll" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', padding: '4rem 0 3rem 0' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2.5rem', marginBottom: '3rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

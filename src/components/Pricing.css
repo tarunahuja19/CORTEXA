@@ -11,7 +11,7 @@
 /* Billing Toggle Switch */
 .billing-toggle-container {
   display: inline-flex;
-  background: rgba(14, 27, 34, 0.8);
+  background: rgba(217, 232, 226, 0.65);
   border: 1px solid var(--border-color);
   padding: 4px;
   border-radius: 9999px;
@@ -87,7 +87,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: rgba(14, 27, 34, 0.6);
+  background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 2.5rem 2rem;
@@ -100,12 +100,12 @@
 
 .pricing-card-recommended {
   border-color: var(--accent-primary);
-  box-shadow: 0 8px 32px rgba(255, 200, 1, 0.04);
-  background: rgba(17, 76, 90, 0.15);
+  box-shadow: 0 8px 32px rgba(255, 153, 50, 0.12);
+  background: rgba(17, 76, 90, 0.08);
 }
 
 .pricing-card-recommended:hover {
-  box-shadow: 0 12px 40px rgba(255, 200, 1, 0.08);
+  box-shadow: 0 12px 40px rgba(255, 153, 50, 0.18);
 }
 
 /* Card inner details */
