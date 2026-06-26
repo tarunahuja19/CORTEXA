@@ -154,21 +154,31 @@ function App() {
             <div className="float-blob blob-3"></div>
           </div>
 
-          {/* Parallax Floating Tech Chips */}
+          {/* Parallax Floating Tech Chips — Premium Mini-Cards */}
           <div className="floating-chip chip-1 select-none" style={{ top: '12%', left: '6%' }}>
+            <span className="chip-status-dot chip-dot-green"></span>
             <code>{`{"stream": true}`}</code>
           </div>
           <div className="floating-chip chip-2 select-none" style={{ top: '38%', right: '5%' }}>
-            <code>{`0x7F_SYNC_OK`}</code>
+            <span className="chip-icon-mini">⟡</span>
+            <code>{`latency: 0.08ms`}</code>
           </div>
           <div className="floating-chip chip-3 select-none" style={{ top: '72%', left: '10%' }}>
+            <span className="chip-status-dot chip-dot-amber"></span>
             <code>{`db.commit()`}</code>
           </div>
           <div className="floating-chip chip-4 select-none" style={{ top: '22%', right: '14%' }}>
-            <code>{`latency: 0.08ms`}</code>
+            <span className="chip-icon-mini">↗</span>
+            <code>{`throughput: 6.2K/s`}</code>
           </div>
           <div className="floating-chip chip-5 select-none" style={{ top: '58%', right: '12%' }}>
-            <code>{`nodes: 4/4 ✓`}</code>
+            <span className="chip-status-dot chip-dot-green"></span>
+            <code>{`0x7F_SYNC_OK`}</code>
+          </div>
+          <div className="floating-chip chip-6 select-none" style={{ bottom: '10%', left: '4%' }}>
+            <span className="chip-icon-mini">◈</span>
+            <code>{`nodes: 4/4`}</code>
+            <span className="chip-check-mark">✓</span>
           </div>
 
           <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
@@ -498,38 +508,95 @@ function App() {
         </section>
 
         {/* Technical Specifications Section */}
-        <section id="tech-specs" aria-labelledby="specs-title" className="reveal-on-scroll" style={{ padding: '5rem 0', borderTop: '1px solid var(--border-color)' }}>
+        <section id="tech-specs" aria-labelledby="specs-title" className="specs-section reveal-on-scroll">
           <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <h2 id="specs-title" style={{ fontSize: '2.25rem', marginBottom: '1rem' }}>Technical Specifications</h2>
-              <p style={{ color: 'var(--text-secondary)', maxWidth: '550px', margin: '0 auto' }}>
-                Low-level engine details designed to ensure sub-millisecond execution times and high throughput pipelines.
+            <div className="specs-header">
+              <div className="specs-badge">
+                <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '12px', height: '12px' }} />
+                <span>Under the Hood</span>
+              </div>
+              <h2 id="specs-title" className="specs-title">Technical Specifications</h2>
+              <p className="specs-subtitle">
+                Low-level engine details engineered for sub-millisecond execution, zero state bloat, and cryptographically-verified cluster synchronization.
               </p>
+              <div className="features-accent-line" aria-hidden="true"></div>
             </div>
             
-            <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <img src="/svgs/cog-8-tooth.svg" alt="" style={{ width: '16px', height: '16px', color: 'var(--accent-primary)' }} />
-                  <h3 style={{ fontSize: '1.1rem' }}>Compute Latency</h3>
+            <div className="specs-grid">
+              {/* Spec Card 1 */}
+              <div className="spec-card">
+                <div className="spec-card-icon-row">
+                  <div className="spec-icon-circle">
+                    <img src="/svgs/cog-8-tooth.svg" alt="" style={{ width: '18px', height: '18px' }} />
+                  </div>
+                  <span className="spec-number">01</span>
                 </div>
-                <p style={{ fontSize: '0.85rem' }}>Pipeline intake processes raw data frames in less than 1.2ms using parallel buffer loops.</p>
-              </div>
-              
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '16px', height: '16px', color: 'var(--accent-primary)' }} />
-                  <h3 style={{ fontSize: '1.1rem' }}>Zero State Bloat</h3>
+                <h3 className="spec-card-title">Compute Latency</h3>
+                <p className="spec-card-desc">Pipeline intake processes raw data frames in less than 1.2ms using parallel buffer loops and hardware-level optimizations.</p>
+                <div className="spec-metric-row">
+                  <span className="spec-metric-value">&lt;1.2ms</span>
+                  <span className="spec-metric-label">Avg Frame Processing</span>
                 </div>
-                <p style={{ fontSize: '0.85rem' }}>Localized price updating prevents React virtual DOM comparisons, keeping layout updates under 0.05ms.</p>
+                <div className="spec-bar-container">
+                  <div className="spec-bar-fill" style={{ width: '92%' }}></div>
+                </div>
               </div>
 
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <img src="/svgs/cube-16-solid.svg" alt="" style={{ width: '16px', height: '16px', color: 'var(--accent-primary)' }} />
-                  <h3 style={{ fontSize: '1.1rem' }}>Container Sync</h3>
+              {/* Spec Card 2 */}
+              <div className="spec-card">
+                <div className="spec-card-icon-row">
+                  <div className="spec-icon-circle spec-icon-accent">
+                    <img src="/svgs/arrow-trending-up.svg" alt="" style={{ width: '18px', height: '18px' }} />
+                  </div>
+                  <span className="spec-number">02</span>
                 </div>
-                <p style={{ fontSize: '0.85rem' }}>Cluster-to-cluster encryption nodes synchronize automatically via secure web socket guarantees.</p>
+                <h3 className="spec-card-title">Zero State Bloat</h3>
+                <p className="spec-card-desc">Localized price updating prevents React virtual DOM comparisons, keeping layout updates strictly under 0.05ms threshold.</p>
+                <div className="spec-metric-row">
+                  <span className="spec-metric-value">0.05ms</span>
+                  <span className="spec-metric-label">DOM Update Ceiling</span>
+                </div>
+                <div className="spec-bar-container">
+                  <div className="spec-bar-fill spec-bar-accent" style={{ width: '98%' }}></div>
+                </div>
+              </div>
+
+              {/* Spec Card 3 */}
+              <div className="spec-card">
+                <div className="spec-card-icon-row">
+                  <div className="spec-icon-circle">
+                    <img src="/svgs/cube-16-solid.svg" alt="" style={{ width: '18px', height: '18px' }} />
+                  </div>
+                  <span className="spec-number">03</span>
+                </div>
+                <h3 className="spec-card-title">Container Sync</h3>
+                <p className="spec-card-desc">Cluster-to-cluster encryption nodes synchronize automatically via secure WebSocket guarantees with failover routing.</p>
+                <div className="spec-metric-row">
+                  <span className="spec-metric-value">256-bit</span>
+                  <span className="spec-metric-label">AES Encryption Standard</span>
+                </div>
+                <div className="spec-bar-container">
+                  <div className="spec-bar-fill" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+
+              {/* Spec Card 4 */}
+              <div className="spec-card">
+                <div className="spec-card-icon-row">
+                  <div className="spec-icon-circle spec-icon-accent">
+                    <img src="/svgs/chart-pie.svg" alt="" style={{ width: '18px', height: '18px' }} />
+                  </div>
+                  <span className="spec-number">04</span>
+                </div>
+                <h3 className="spec-card-title">Animation Budget</h3>
+                <p className="spec-card-desc">All motion sequences are hardware-accelerated native CSS with total orchestration timeline under the strict 500ms cap.</p>
+                <div className="spec-metric-row">
+                  <span className="spec-metric-value">&lt;500ms</span>
+                  <span className="spec-metric-label">Total Entry Timeline</span>
+                </div>
+                <div className="spec-bar-container">
+                  <div className="spec-bar-fill" style={{ width: '85%' }}></div>
+                </div>
               </div>
             </div>
           </div>
@@ -537,43 +604,75 @@ function App() {
 
       </main>
 
-      {/* Footer Area */}
-      <footer id="site-footer" className="reveal-on-scroll" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', padding: '4rem 0 3rem 0' }}>
+      {/* Premium Footer */}
+      <footer id="site-footer" className="site-footer reveal-on-scroll">
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2.5rem', marginBottom: '3rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {/* Footer Top — Brand + Navigation */}
+          <div className="footer-top">
+            {/* Brand Column */}
+            <div className="footer-brand">
+              <div className="footer-logo-row">
                 <img src="/svgs/cube-16-solid.svg" alt="" style={{ width: '22px', height: '22px' }} />
-                <span style={{ fontFamily: 'var(--font-headers)', fontWeight: 'bold', fontSize: '1.1rem', letterSpacing: '-0.04em' }}>CORTEXA</span>
+                <span className="footer-logo-text">CORTEXA</span>
               </div>
-              <p style={{ maxWidth: '300px', fontSize: '0.85rem' }}>
-                Advanced AI-driven automation for database streams and multi-currency transactions.
+              <p className="footer-brand-desc">
+                Advanced AI-driven automation for database streams, multi-currency transactions, and autonomous pipeline orchestration.
               </p>
-            </div>
-            
-            <div style={{ display: 'flex', gap: '4rem' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.85rem' }}>
-                <span style={{ fontFamily: 'var(--font-headers)', fontWeight: 'bold', color: 'var(--text-primary)', fontSize: '0.9rem' }}>Product</span>
-                <a href="#features" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Features</a>
-                <a href="#pricing" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Pricing</a>
-                <a href="#tech-specs" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Specs</a>
+              <div className="footer-brand-stat">
+                <span className="footer-stat-dot"></span>
+                <span>99.9% Uptime SLA</span>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.85rem' }}>
-                <span style={{ fontFamily: 'var(--font-headers)', fontWeight: 'bold', color: 'var(--text-primary)', fontSize: '0.9rem' }}>Resource</span>
-                <a href="https://github.com/tarunahuja19/CORTEXA" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>GitHub Repo</a>
-                <span style={{ color: 'var(--text-secondary)', cursor: 'default' }}>Documentation</span>
-                <span style={{ color: 'var(--text-secondary)', cursor: 'default' }}>Status Logs</span>
+            </div>
+
+            {/* Nav Columns */}
+            <div className="footer-nav-columns">
+              <div className="footer-nav-col">
+                <span className="footer-nav-heading">Product</span>
+                <a href="#features" className="footer-nav-link">Features</a>
+                <a href="#pricing" className="footer-nav-link">Pricing</a>
+                <a href="#tech-specs" className="footer-nav-link">Specifications</a>
+              </div>
+              <div className="footer-nav-col">
+                <span className="footer-nav-heading">Resources</span>
+                <a href="https://github.com/tarunahuja19/CORTEXA" target="_blank" rel="noopener noreferrer" className="footer-nav-link">
+                  GitHub Repo
+                  <img src="/svgs/chevron-right.svg" alt="" style={{ width: '10px', height: '10px', opacity: 0.4 }} />
+                </a>
+                <span className="footer-nav-link footer-nav-static">Documentation</span>
+                <span className="footer-nav-link footer-nav-static">Status Logs</span>
+              </div>
+              <div className="footer-nav-col">
+                <span className="footer-nav-heading">Legal</span>
+                <span className="footer-nav-link footer-nav-static">Privacy Policy</span>
+                <span className="footer-nav-link footer-nav-static">Terms of Service</span>
+                <span className="footer-nav-link footer-nav-static">Compliance</span>
               </div>
             </div>
           </div>
-          
-          <div style={{ borderTop: '1px solid rgba(217, 232, 226, 0.06)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', opacity: 0.8 }}>
+
+          {/* Footer CTA Row */}
+          <div className="footer-cta-row">
+            <div className="footer-cta-text">
+              <span className="footer-cta-headline">Ready to deploy?</span>
+              <span className="footer-cta-sub">Start building with Cortexa in under 60 seconds.</span>
+            </div>
+            <button className="btn-primary footer-cta-btn">
+              <span>Get Started Free</span>
+              <img src="/svgs/chevron-right.svg" alt="" style={{ width: '12px', height: '12px' }} />
+            </button>
+          </div>
+
+          {/* Footer Bottom Bar */}
+          <div className="footer-bottom">
+            <span className="footer-copyright">
               CORTEXA &copy; {new Date().getFullYear()}. All Rights Reserved.
             </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981' }} aria-hidden="true"></div>
-              <span>All Systems Operational</span>
+            <div className="footer-bottom-right">
+              <div className="footer-status-indicator">
+                <span className="footer-live-dot"></span>
+                <span>All Systems Operational</span>
+              </div>
+              <span className="footer-version-tag">v1.0.0-beta</span>
             </div>
           </div>
         </div>
